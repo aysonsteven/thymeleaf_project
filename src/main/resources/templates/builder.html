@@ -117,13 +117,64 @@
     div.ui.inverted.vertical.center.aligned.segment{
     	padding: 0;
     }
+    div.ui.vertical.stripe.segment{
+    	padding-top: 0;
+    	height: 100%;
+    	padding-bottom:0 ;
+    }
+    div.pusher{
+    	height: 100%;
+    	overflow: hidden
+    }
   </style>
+  <script th:src="@{/js/jquery.min.js}"  crossorigin="anonymous"></script>
+  <script th:src="@{/js/semantic.min.js}"  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   
+  <script th:src="@{/components/visibility.js}"></script>
+  <script th:src="@{/components/sidebar.js}"></script>
+  <script th:src="@{/components/transition.js}"></script>
+  <script>
+  $(document)
+    .ready(function() {
+
+      // fix menu when passed
+      $('.masthead')
+        .visibility({
+          once: false,
+          onBottomPassed: function() {
+            $('.fixed.menu').transition('fade in');
+          },
+          onBottomPassedReverse: function() {
+            $('.fixed.menu').transition('fade out');
+          }
+        })
+      ;
+
+      // create sidebar and attach to menu open
+      $('.ui.sidebar')
+        .sidebar('attach events', '.toc.item')
+      ;
+
+    })
+  ;
+  </script>
 <style>html{height:100%}html body{margin:0;height:100%}</style>
 <link rel="stylesheet" th:href="@{/builder/styles.9e031c2089260181.css}" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" th:href="@{/builder/styles.9e031c2089260181.css}"></noscript>
 </head>
-<body>
+<body class="pushable">
+
+<!-- Sidebar Menu -->
+<div class="ui vertical inverted sidebar menu left">
+  <a class="item" th:href="@{/}">Home</a>
+  <a class="item" th:href="@{/about}">About Us</a>
+  <a class="active item" th:href="@{/builder}">Web Builder</a>
+
+  <a class="item">Login</a>
+  <a class="item">Signup</a>
+</div>
+
+<div class="pusher">
   <div class="ui inverted vertical center aligned segment">
 
     <div class="ui container">
@@ -134,7 +185,6 @@
 		  <a class="item" th:href="@{/}">Home</a>
 		  <a class="item" th:href="@{/about}">About Us</a>
 		  <a class="active item" th:href="@{/builder}">Web Builder</a>
-		  <a class="item">Careers</a>
         <div class="right item">
           <a class="ui inverted button">Log in</a>
           <a class="ui inverted button">Sign Up</a>
@@ -142,10 +192,14 @@
       </div>
     </div>
 
-    
-    </div>
+  </div>
 
-  <app-root></app-root>
+  <div class="ui vertical stripe segment">
+  	<app-root></app-root>
+  </div>
+</div>
+
+ 
 <script th:src="@{/builder/runtime.a78fb81c0eedee45.js}" type="module"></script>
 <script th:src="@{/builder/polyfills.f220bac6ed7e40ad.js}" type="module"></script>
 <script th:src="@{/builder/scripts.9d0f012e6f16ecc7.js}" defer></script>
